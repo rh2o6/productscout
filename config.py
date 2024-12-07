@@ -7,9 +7,9 @@ from selenium_stealth import stealth
 import time
 import random
 # Path to the chromedriver executable
-driverpath = "/opt/render/project/src/chromedriver.exe"
+driverpath = "/opt/render/project/src/chromedriver"
 # Path to the log file
-log_path = "/opt/render/project/src/chromedriver.exe"
+log_path = "/opt/render/project/src/chromedriver"
 # Set Chrome options if needed
 options = Options()
 
