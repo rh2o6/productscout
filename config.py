@@ -6,11 +6,10 @@ from selenium.webdriver.common.keys import Keys
 from selenium_stealth import stealth
 import time
 import random
-import os
 # Path to the chromedriver executable
-driverpath= os.path.abspath("chromedriver.exe")
+driverpath = "/opt/render/project/src/chromedriver.exe"
 # Path to the log file
-log_path = os.path.abspath("chromedriver.exe")
+log_path = "/opt/render/project/src/chromedriver.exe"
 # Set Chrome options if needed
 options = Options()
 
