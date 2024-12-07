@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+       body{
+            font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+            background-color:#1aa3ff; 
+        }
+
+
+        /* Container for store results */
+        .store-container {
+            margin-bottom: 30px;
+        }
+
+        /* Container for items to display them in a row */
+        .items-container {
+            display: flex;
+            flex-wrap: wrap; /* Wrap items to the next line if they overflow */
+            gap: 20px; /* Space between items */
+            overflow: hidden; /* To hide content when collapsing */
+            transition: height 0.5s ease; /* Transition for smooth collapsing/expanding */
+        }
+
+       /* Styling individual items */
+ /* Styling individual items */
+.item-card {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color:white;
+    border-radius: 25px;
+}
+
+/* Set a minimum height for titles */
+.item-card .item-title {
+    min-height: 60px; /* Enough space for most titles */
+    margin-bottom: 10px;
+}
+
+/* Set a fixed height for images */
+.item-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Container for price and link to ensure alignment */
+.price-link-container {
+    margin-top: auto;
+    text-align: center;
+}
+/* Button styling */
+.back-home-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.back-home-button:hover {
+    background-color:#005fa3;
+}
+
+.viewbutton {
+    /*display: inline-block;*/
+    padding: 10px 25px; /* Increased padding */
+    background-color: #007acc;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap; /* Prevent the text from wrapping */
+    width: auto; /* Allow the button to size based on content */
+
+}
+
+
+
+.viewbutton:hover {
+    background-color: #005fa3;
+}
+
+
+.toggle-button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; /* Same font as body */
+        }
+
+        .toggle-button:hover {
+            background-color: #005fa3;
+        }
+
+
+        filter-select {
+    display: inline-block;
+    padding: 10px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    margin-top: 5px;
+}
+
+/* Style for the filter label */
+.filter-label {
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    margin-right: 10px;
+}
+
+/* Style for the filter submit button */
+.filter-submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: white;
+    border-radius: 25px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    margin-top: 5px;
+}
+
+.filter-submit-button:hover {
+    background-color: #005fa3;
+}
+
+.filter-select {
+    display: inline-block;
+    padding: 10px;
+    background-color: #007acc;
+    color: white;
+    border: 1px solid #007acc; /* Add border to match the button style */
+    border-radius: 25px;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    margin-top: 5px;
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none; /* Remove default styling in WebKit browsers */
+    -moz-appearance: none; /* Remove default styling in Firefox */
+}
+
+/* Add a custom arrow to the select element */
+.filter-select-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.filter-select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none;
+}
+
+.likebttn{
+    width:32px;
+    height:32px;
+    cursor:pointer;
+}
+.buttons-container{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    gap:5px;
+}
+
+
+
+    </style>
+</head>
+<body>
+    <h1>{{username}}'s Wishlist</h1>
+    <a href="/" class="back-home-button">Back to Home</a>
+
+    <div class="items-container">
+    {% for item in userlist%}
+                    <div class="item-card">
+                        <div class="item-title"><strong>{{item['Title'] }}</strong></div>
+                        <img src="{{item['Image']}}" alt="{{item['Title']}}"><br>
+                        <div class="price-link-container">
+                            <strong>Price:</strong> {{item['Price']}}<br>
+
+                            <div class ="buttons-container">
+                            <img class = "likebttn" src = "{{ url_for('static', filename='Icons-Images/likebttn.png') }}"
+                            data-title = "{{item['Title']}}"
+                            data-price = "{{item['Price']}}"
+                            data-img = "{{item['image']}}"
+                            data-link  = "{{item['Link']}}"
+                            onclick="likeItem(this)"> 
+                            <a class = "viewbutton" href="{{item['Link']}}">View Item</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+
+
+
+
+</body>
+</html>

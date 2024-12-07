@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #1aa3ff;
+            margin: 0px;
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; 
+            height: 100vh; /* Ensure body takes full height */
+            display: flex; /* Use Flexbox for centering */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+            flex-direction:column;
+        }
+
+        
+    </style>
+
+<script>
+    // Redirect to the home page after 3 seconds
+    setTimeout(function() {
+        window.location.href = "{{ url_for('views.home') }}";
+    }, 3000);
+</script>
+
+</head>
+
+
+
+
+<body>
+
+    <h1>Succesfuly Logged Out!</h1>
+    
+    <h2>Redirecting Back to Home</h2>
+
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            background-color: #1aa3ff;
+            margin: 0px;
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; 
+            height: 100vh; /* Ensure body takes full height */
+            display: flex; /* Use Flexbox for centering */
+            justify-content: center; /* Center content horizontally */
+            align-items: center; /* Center content vertically */
+        }
+
+        .navbar {
+            background: linear-gradient(90deg, #e0f7ff, #ffffff);
+            padding: 10px 0; /* Adjust padding to create space around the items */
+            width: 100%;
+            height: auto; /* Adjust height based on content */
+            position:fixed;
+            top:0;
+        }
+
+        .navbar ul {
+            list-style-type: none;
+            margin: 0; /* Remove default margin */
+            padding: 0; /* Remove default padding */
+            display: flex; /* Use flexbox to align items horizontally */
+            justify-content: center; /* Center align the list items */
+            height: auto; /* Adjust height based on content */
+        }
+
+        .navbar ul li {
+            margin: 0 15px; /* Space between list items (adjust as needed) */
+            background-color: transparent; /* Default background color for list items */
+            border-radius: 5px; /* Optional: Add some border-radius for rounded corners */
+            display: flex; /* Flexbox for vertical and horizontal centering */
+            align-items: center; /* Center text vertically */
+            justify-content: center; /* Center text horizontally */
+            height: 40px; /* Adjust the height as needed */
+            box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+            transition: background-color 0.3s; /* Smooth transition for background color change */
+        }
+
+        .navbar ul li:hover {
+            background-color: #f0f0f0; /* Background color on hover */
+        }
+
+        .navbar ul li a {
+            text-decoration: none;
+            color: #003366;
+            display: flex; /* Use flexbox to center content */
+            align-items: center; /* Center text vertically */
+            justify-content: center; /* Center text horizontally */
+            padding: 0 20px; /* Add padding inside the link (horizontal padding only) */
+            height: 100%; /* Ensure the link takes the full height of the li */
+            box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+            text-align: center; /* Center text inside the link */
+        }
+
+        .Signupform {
+            position: absolute;
+            left: 50%; /* Center the form horizontally */
+            top: 50%; /* Center the form vertically */
+            transform: translate(-50%, -50%); /* Shift the form back by half its width and height */
+            text-align: center; /* Center text inside the form */
+        }
+
+        .Signupform input {
+            display: block;
+            margin: 10px auto; /* Center inputs horizontally with automatic margins */
+            border-radius: 20px;
+            padding: 10px;
+            width: 80%; /* Set a width for better appearance */
+        }
+
+        .Signupform button {
+            border-radius: 20px; /* Same border-radius for the button */
+            padding: 10px;
+            width: 80%; /* Match the width with the inputs */
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .navbar ul {
+                flex-direction: column; /* Stack navigation items vertically */
+                align-items: center; /* Center items horizontally */
+            }
+
+            .navbar ul li {
+                margin: 10px 0; /* Adjust margin for vertical stacking */
+                width: 100%; /* Ensure items take full width */
+                text-align: center; /* Center text inside each item */
+            }
+
+            .navbar ul li a {
+                padding: 10px; /* Adjust padding for better spacing on small screens */
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <ul>
+            <li> <a href="/about">About</a></li>
+            <li> <a href="/contact">Contact</a></li>
+            <li> <a href="/signup">Login/Sign Up</a></li>
+        </ul>
+    </nav>
+
+    <div class="Signupform">
+        <h1 id="signupttl">Sign Up</h1>
+        <form method="POST">
+        
+            <input name = "email" required="true" type="email" placeholder="Enter Email"> 
+            
+            <input name = "password" required="true"type="password" placeholder="Enter Password"> 
+           
+            <input name ="name" required = "true" type="text" placeholder="Enter Name"> 
+            
+            <button id="signupbttn" type="submit"> Sign Up</button>
+        </form>
+        <p>Already have an account? <a href="/login">Login</a></p>
+
+        {% if signuperror%}
+            <p>Email is already linked to an account</p>
+        {% endif %}
+
+    </div>
+
+</body>
+</html>

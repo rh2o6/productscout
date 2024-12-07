@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&family=Merriweather:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+
+    /* General Body Styles */
+body {
+    background-color: #1aa3ff;
+    margin:0px;
+    font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
+}
+
+
+
+/* Search Div and Children Styles */
+#searchdiv {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+
+    input{
+        border: 2px solid black;
+        border-radius: 80px;
+        padding-bottom: 5%;
+        padding-top:5%;
+        width:100%;
+        text-align:center;
+        font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif; 
+    }
+
+    button {
+    background-color: #007acc;
+    color: black;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 30px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.5s;
+    font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+    margin-top:30px
+    }
+
+    button:hover {
+    background-color: #005f99;
+}
+}
+
+
+/* Title Div and Child Styles */
+#titleDiv {
+    position: absolute;
+    left: 50%;
+    top: 35%;
+    transform: translate(-50%, -50%);
+}
+
+#titleDiv h1 {
+    position: absolute;
+    left: 50%;
+    top: 0%;
+    transform: translate(-50%, -50%);
+    color: black;
+}
+
+
+
+
+.navbar {
+    background: linear-gradient(90deg, #e0f7ff, #ffffff);
+    padding: 10px 0; /* Adjust padding to create space around the items */
+    width: 100%;
+    height: auto; /* Adjust height based on content */
+}
+
+.navbar ul {
+    list-style-type: none;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    display: flex; /* Use flexbox to align items horizontally */
+    justify-content: center; /* Center align the list items */
+    height: auto; /* Adjust height based on content */
+}
+
+.navbar ul li {
+    margin: 0 15px; /* Space between list items (adjust as needed) */
+    background-color: transparent; /* Default background color for list items */
+    border-radius: 5px; /* Optional: Add some border-radius for rounded corners */
+    display: flex; /* Flexbox for vertical and horizontal centering */
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    height: 40px; /* Adjust the height as needed */
+    box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+    transition: background-color 0.3s; /* Smooth transition for background color change */
+}
+
+.navbar ul li:hover {
+    background-color: #f0f0f0; /* Background color on hover */
+}
+
+.navbar ul li a {
+    text-decoration: none;
+    color: #003366;
+    display: flex; /* Use flexbox to center content */
+    align-items: center; /* Center text vertically */
+    justify-content: center; /* Center text horizontally */
+    padding: 0 20px; /* Add padding inside the link (horizontal padding only) */
+    height: 100%; /* Ensure the link takes the full height of the li */
+    box-sizing: border-box; /* Include padding and border in the element’s total width and height */
+    text-align: center; /* Center text inside the link */
+}
+
+/* Mobile Styles */
+@media (max-width: 768px) {
+    .navbar ul {
+        flex-direction: column; /* Stack navigation items vertically */
+        align-items: center; /* Center items horizontally */
+    }
+
+    .navbar ul li {
+        margin: 10px 0; /* Adjust margin for vertical stacking */
+        width: 100%; /* Ensure items take full width */
+        text-align: center; /* Center text inside each item */
+    }
+
+    .navbar ul li a {
+        padding: 10px; /* Adjust padding for better spacing on small screens */
+    }
+}
+    </style>
+
+</head>
+<body>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='test.js') }}"></script>
+
+    <nav class = "navbar">
+        <ul>
+            <li> <a href="/about">About</a></li>
+            <li> <a href = "/contact">Contact</a></li>
+
+            {%if not islog%}
+            <li> <a href = "/signup">Login/Sign Up</a></li>
+            
+            {%else%}
+            <li> <a href = "/logout">Log Out</a></li>
+            {%endif%}
+
+
+
+            {%if islog%}
+
+            <li>Hello, {{username}}</li>
+            <li><a href = "/wishlist"> Wishlist</a></li>
+            {%endif%}
+
+        </ul>
+    </nav>
+
+
+    <div id = "titleDiv">
+    <h1> ProductScout </h1>
+    <br></br>
+    <h2>One product. Countless Options.</h2>
+    </div>
+
+    <div id = "searchdiv">
+    <form action="{{ url_for('views.button_click') }}" method="POST">
+        <!-- Input field for the product name -->
+        <input type="text" name="itemtofind" placeholder="Enter product name" required>
+        <!-- Submit button -->
+        <button type="submit"><strong>Search</strong></button>
+    </form>
+    </div>
+
+
+
+</body>
+</html>

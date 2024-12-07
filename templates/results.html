@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results</title>
+    <style>
+
+        body{
+            font-family: Century Gothic,CenturyGothic,AppleGothic,sans-serif;
+            background-color:#1aa3ff; 
+        }
+
+
+        /* Container for store results */
+        .store-container {
+            margin-bottom: 30px;
+        }
+
+        /* Container for items to display them in a row */
+        .items-container {
+            display: flex;
+            flex-wrap: wrap; /* Wrap items to the next line if they overflow */
+            gap: 20px; /* Space between items */
+            overflow: hidden; /* To hide content when collapsing */
+            transition: height 0.5s ease; /* Transition for smooth collapsing/expanding */
+        }
+
+       /* Styling individual items */
+ /* Styling individual items */
+.item-card {
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    width: 200px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    background-color:white;
+    border-radius: 25px;
+}
+
+/* Set a minimum height for titles */
+.item-card .item-title {
+    min-height: 60px; /* Enough space for most titles */
+    margin-bottom: 10px;
+}
+
+/* Set a fixed height for images */
+.item-card img {
+    max-width: 100%;
+    height: 150px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+/* Container for price and link to ensure alignment */
+.price-link-container {
+    margin-top: auto;
+    text-align: center;
+}
+/* Button styling */
+.back-home-button {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: white;
+    text-decoration: none;
+    border-radius: 25px;
+    text-align: center;
+}
+
+.back-home-button:hover {
+    background-color:#005fa3;
+}
+
+.viewbutton {
+    /*display: inline-block;*/
+    padding: 10px 25px; /* Increased padding */
+    background-color: #007acc;
+    color: white;
+    border-radius: 25px;
+    text-align: center;
+    text-decoration: none;
+    white-space: nowrap; /* Prevent the text from wrapping */
+    width: auto; /* Allow the button to size based on content */
+
+}
+
+
+
+.viewbutton:hover {
+    background-color: #005fa3;
+}
+
+
+.toggle-button {
+            margin: 10px 0;
+            padding: 10px 20px;
+            background-color: #007acc;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif; /* Same font as body */
+        }
+
+        .toggle-button:hover {
+            background-color: #005fa3;
+        }
+
+
+        filter-select {
+    display: inline-block;
+    padding: 10px;
+    background-color: #007acc;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    margin-top: 5px;
+}
+
+/* Style for the filter label */
+.filter-label {
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    margin-right: 10px;
+}
+
+/* Style for the filter submit button */
+.filter-submit-button {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #007acc;
+    color: white;
+    border-radius: 25px;
+    border: none;
+    text-align: center;
+    text-decoration: none;
+    cursor: pointer;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    margin-top: 5px;
+}
+
+.filter-submit-button:hover {
+    background-color: #005fa3;
+}
+
+.filter-select {
+    display: inline-block;
+    padding: 10px;
+    background-color: #007acc;
+    color: white;
+    border: 1px solid #007acc; /* Add border to match the button style */
+    border-radius: 25px;
+    font-family: Century Gothic, CenturyGothic, AppleGothic, sans-serif;
+    text-align: center;
+    cursor: pointer;
+    width: auto;
+    margin-top: 5px;
+    appearance: none; /* Remove default styling */
+    -webkit-appearance: none; /* Remove default styling in WebKit browsers */
+    -moz-appearance: none; /* Remove default styling in Firefox */
+}
+
+/* Add a custom arrow to the select element */
+.filter-select-wrapper {
+    display: inline-block;
+    position: relative;
+}
+
+.filter-select-wrapper::after {
+    content: '▼';
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+    pointer-events: none;
+}
+
+.likebttn{
+    width:32px;
+    height:32px;
+    cursor:pointer;
+}
+.buttons-container{
+    display:flex;
+    justify-content:space-between;
+    align-items: center;
+    gap:5px;
+}
+
+    </style>
+</head>
+<body>
+    <h1>Search Results for  {{searchitem}}</h1>
+    <a href="/" class="back-home-button">Back to Home</a>
+    {% if results_dict %}
+        <div>
+        {% for i in results_dict %}
+            <div class="store-container">
+                <h2>{{ i }}</h2>
+                <button class="toggle-button" onclick="toggleStore('{{ i | escape }}')">Toggle Results</button>
+
+
+                <form method="POST" action="{{ url_for('views.resultsfilter') }}">
+                    <label class="filter-label" for="filter-{{ i | escape }}">Sort by:</label>
+                    <select id="filter-{{ i | escape }}" name="filter" class="filter-select">
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="alpha">Name A-Z</option>
+                        <option value="alphar">Name Z-A</option>
+                    </select>
+                    <input type="hidden" name="store" value="{{ i }}">
+                    <input type="hidden" name="searchitem" value="{{ searchitem }}">
+                    <button type="submit" class="filter-submit-button">Apply</button>
+                </form>
+
+                {% if results_dict[i]['Results'] %}
+                <div id="store-results-{{ i | escape }}" class="items-container">
+                    {% for item in results_dict[i]['Results'] %}
+                    <div class="item-card">
+                        <div class="item-title"><strong>{{item['title'] }}</strong></div>
+                        <img src="{{item['img']}}" alt="{{item['title']}}"><br>
+                        <div class="price-link-container">
+                            <strong>Price:</strong> {{item['price']}}<br>
+
+                            <div class ="buttons-container">
+                            <img class = "likebttn" src = "{{ url_for('static', filename='Icons-Images/likebttn.png') }}"
+                            data-title = "{{item['title']}}"
+                            data-price = "{{item['price']}}"
+                            data-img = "{{item['img']}}"
+                            data-link  = "{{item['link']}}"
+                            onclick="likeItem(this)"> 
+                            <a class = "viewbutton" href="{{item['link']}}">View Item</a>
+                            </div>
+
+                        </div>
+                    </div>
+                    {% endfor %}
+                    </div>
+                {% else %}
+                    <p>No results found for this store.</p>
+                {% endif %}
+            </div>
+        {% endfor %}
+        </div>
+    {% else %}
+        <p>No results found.</p>
+    {% endif %}
+
+    <script>
+        function toggleStore(storeName) {
+    const storeResults = document.getElementById(`store-results-${storeName}`);
+    const currentHeight = storeResults.style.height;
+
+    if (currentHeight === "0px" || currentHeight === "") {
+        // Expand the container
+        storeResults.style.height = storeResults.scrollHeight + "px";
+        storeResults.style.visibility = "visible"; // Make content visible
+        storeResults.style.transition = "height 0.5s ease"; // Smooth height transition
+    } else {
+        // Collapse the container
+        storeResults.style.height = "0px";
+        storeResults.style.transition = "height 0.5s ease"; // Smooth height transition
+
+        // Hide content after the transition is finished
+        setTimeout(() => {
+            storeResults.style.visibility = "hidden";
+        }, 500); // Match this delay with the transition duration (0.5s)
+    }
+}
+
+        // Initialize the containers with their correct height
+        document.addEventListener("DOMContentLoaded", function () {
+            const containers = document.querySelectorAll('.items-container');
+            containers.forEach(container => {
+                container.style.height = container.scrollHeight + "px"; // Set the initial height based on content
+            });
+        });
+    </script>
+
+    <script>
+
+
+
+function likeItem(button) {
+    // Retrieve the item's details from data attributes
+    const itemDetails = {
+        title: button.getAttribute('data-title'),
+        price: button.getAttribute('data-price'),
+        img: button.getAttribute('data-img'),
+        link: button.getAttribute('data-link')
+    };
+
+    // Define the endpoint for saving liked items
+    const url = "{{ url_for('views.addwishlist') }}";  // This is your Flask endpoint
+
+    // Create a POST request to send the item data
+    fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+              // If using CSRF protection
+        },
+        body: JSON.stringify(itemDetails)
+    })
+
+
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Item liked successfully!');
+        } else {
+            alert('There was an issue adding item to wishlist (Make sure you are logged in!).');
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+
+
+    </script>
+
+</body>
+</html>
