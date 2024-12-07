@@ -26,7 +26,7 @@ user_agents = [
 
 useragent = random.choice(user_agents)
 
-#options.add_argument('--headless')
+options.add_argument('--headless')
 options.add_argument('--disable-gpu')  # May improve stability in headless mode
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--disable-web-security')
