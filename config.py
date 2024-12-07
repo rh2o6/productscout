@@ -13,6 +13,21 @@ log_path = "/opt/render/project/src/chromedriver"
 # Set Chrome options if needed
 options = Options()
 
+
+
+import os
+import stat
+
+# Ensure the file exists
+if os.path.exists(driverpath):
+    # Add executable permissions
+    st = os.stat(driverpath)
+    os.chmod(driverpath, st.st_mode | stat.S_IEXEC)
+else:
+    print(f"Error: {driverpath} does not exist.")
+
+
+
 user_agents = [
     # Add your list of user agents here
 	'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36',
