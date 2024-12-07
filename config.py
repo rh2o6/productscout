@@ -40,7 +40,7 @@ user_agents = [
 ]
 
 useragent = random.choice(user_agents)
-
+options.binary_location = "/opt/render/project/src/google-chrome"
 options.add_argument('--headless')
 options.add_argument('--disable-gpu')  # May improve stability in headless mode
 options.add_argument('--ignore-certificate-errors')
