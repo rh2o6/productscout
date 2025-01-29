@@ -2,7 +2,7 @@ import redis
 import os
 from dotenv import load_dotenv
 
-print("\n",load_dotenv(dotenv_path='productscout\info.env'))
+print("\n",load_dotenv(dotenv_path='info.env'))
 
 # Load Redis configuration
 host = os.getenv("REDIS_HOST")

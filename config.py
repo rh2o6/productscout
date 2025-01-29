@@ -7,9 +7,12 @@ from selenium_stealth import stealth
 import time
 import random
 # Path to the chromedriver executable
-driverpath = "/opt/render/project/src/chromedriver"
+driverpath = r"chromedriverwin.exe"
+
+
+
 # Path to the log file
-log_path = "/opt/render/project/src/chromedriver"
+log_path = "chromedriverwin.exe"
 # Set Chrome options if needed
 options = Options()
 
@@ -40,8 +43,9 @@ user_agents = [
 ]
 
 useragent = random.choice(user_agents)
-options.binary_location = "/opt/render/project/src/google-chrome"
-options.add_argument('--headless')
+options.binary_location = r"C:\Program Files\Google\Chrome\Application\chrome.exe"
+
+#options.add_argument('--headless')
 options.add_argument('--disable-gpu')  # May improve stability in headless mode
 options.add_argument('--ignore-certificate-errors')
 options.add_argument('--disable-web-security')
