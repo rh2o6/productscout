@@ -7,7 +7,7 @@ print("\n",load_dotenv(dotenv_path='info.env'))
 # Load Redis configuration
 host = os.getenv("REDIS_HOST")
 port = os.getenv("REDIS_PORT")
-print(host,port)
+print(f"host{host},port{port}")
 password = os.getenv("REDIS_PASSWORD")
 
 if host is None or port is None:

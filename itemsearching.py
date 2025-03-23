@@ -1,4 +1,5 @@
 from config import *
+
 def run_search(itemtofind):
     import requests
     from selenium import webdriver
@@ -6,7 +7,7 @@ def run_search(itemtofind):
     from selenium.webdriver.common.keys import Keys
     import time
     import random
-    driver = webdriver.Chrome(service=service, options=options)
+    driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()), options=options)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     stealth(driver,
         languages=["en-US", "en"],

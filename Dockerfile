@@ -17,8 +17,7 @@ COPY requirements.txt /productscout//
 RUN pip install --no-cache-dir -r requirements.txt
 COPY . /productscout//
 
-# Stage 2: Selenium with Chrome
-FROM selenium/standalone-chrome:latest AS selenium-base
+
 
 
 
