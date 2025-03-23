@@ -7,6 +7,8 @@ def run_search(itemtofind):
     from selenium.webdriver.common.keys import Keys
     import time
     import random
+    from selenium.webdriver.support import expected_conditions as EC
+    from selenium.webdriver.support.ui import WebDriverWait
     driver = webdriver.Chrome(service=ChromeService(executable_path=ChromeDriverManager().install()), options=options)
     driver.execute_script("Object.defineProperty(navigator, 'webdriver', {get: () => undefined})")
     stealth(driver,
@@ -66,14 +68,24 @@ def run_search(itemtofind):
 
 
 
-    def searchstore(itemtofind: str, store: dict):
-        driver.get(store['Link'])
+    def searchstore(itemtofind: str, store: str):
+        driver.get(stores[store]['Link'])
 
-        #Finds the search bar and searches for item
-        search = driver.find_element(By.NAME,store['searchbar'])
-        search.click()
-        search.send_keys(itemtofind)
-        search.send_keys(Keys.RETURN)
+        #Finds the search bar and searches for item 
+        try:
+            search = WebDriverWait(driver, 5).until(
+                EC.presence_of_element_located((By.NAME, store['searchbar']))
+            )
+            search.click()
+            search.send_keys(itemtofind)
+            search.send_keys(Keys.RETURN)
+        except Exception as e:
+            print(f"Search bar not found for {store['name']}: {e}")
+            return []
+
+
+
+
         try:
             #time.sleep(2)
             captcha = driver.find_element(By.ID, store['Captcha'])
@@ -92,18 +104,17 @@ def run_search(itemtofind):
 
         try:
             driver.implicitly_wait(1)
-            cards = driver.find_elements(By.CSS_SELECTOR, store['cardselect'])
+            cards = driver.find_elements(By.CSS_SELECTOR, stores[store]['cardselect'])
         except:
             driver.implicitly_wait(1)
-            cards = driver.find_elements(By.CLASS_NAME, store['cardselect'])
+            cards = driver.find_elements(By.CLASS_NAME, stores[store]['cardselect'])
 
         results = []
 
         if cards:
             print("FOUND ELEMENTS")
-            print(len(cards))
             for card in cards:
-                if card.get_attribute("data-product") is None and store == gamestop:
+                if card.get_attribute("data-product") is None and store == 'gamestop':
                     continue
                 try:
                     title = card.find_element(By.CSS_SELECTOR, store["titleselector"])

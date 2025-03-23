@@ -39,87 +39,56 @@ options.add_argument(f'user-agent={useragent}')
 # Suppress logs from Chrome
 options.add_argument("--log-level=3")  # 0 = INFO, 1 = WARNING, 2 = ERROR, 3 = FATAL
 
-amazon = {'searchbar':'field-keywords',
-          'name':'Amazon',
-          'identifier':'Amazon.ca: Low Prices – Fast Shipping – Millions of Items',
-          'titleselector':'h2 a span',
-          'priceselector':'[data-cy="price-recipe"] span',
-          'imageselector':'.s-image',
-          'linkselector':"h2 a",
-          'cardselect':'[data-component-type="s-search-result"]',
-          'results':[],
-          'Link':'https://www.amazon.ca/',
-          'Captcha':'captchacharacters',
-          'CaptchaImg':'body > div > div.a-row.a-spacing-double-large > div.a-section > div > div > form > div.a-row.a-spacing-large > div > div > div.a-row.a-text-center > img',
-          'CaptchaSubmit':'field-keywords',
-          'CaptchaButton':'a-button-text'}
-walmart = {'searchbar':'q',
-           'name':'Walmart',
-           'identifier':'Online Shopping Canada: Everyday Low Prices at Walmart.ca!',
-           'imageselector':'',
-           'linkselector':'',
-           'Link':'https://www.walmart.ca/en',
-           'results':[]}
+stores = {
+    "amazon": {
+        'searchbar': 'field-keywords',
+        'name': 'Amazon',
+        'results': [],
+        'Link': 'https://www.amazon.ca/',
+        'Captcha': 'captchacharacters'
+    },
+    "walmart": {
+        'searchbar': 'q',
+        'name': 'Walmart',
+        'identifier': 'Online Shopping Canada: Everyday Low Prices at Walmart.ca!',
+        'imageselector': '',
+        'linkselector': '',
+        'Link': 'https://www.walmart.ca/en',
+        'results': []
+    },
+    "gamestop": {
+        'searchbar': 'q',
+        'name': 'Gamestop',
+        'Link': 'https://www.gamestop.ca/',
+        'Captcha': 'True',
+        'results': []
+    },
+    "bestbuy": {
+        'searchbar': 'search',
+        'name': 'Best Buy',
+        'Link': 'https://www.bestbuy.ca/en-ca',
+        'results': []
+    },
+    "target": {
+        'searchbar': 'searchTerm',
+        'name': 'Target',
+        'Link': 'https://www.target.com/',
+        'results': []
+    },
+    "ebay": {
+        'searchbar': '_nkw',
+        'name': 'Ebay',
+        'Link': 'https://www.ebay.ca/',
+        'results': []
+    },
+    "homedepot": {
+        'searchbar': '#id110',
+        'name': 'Sams Club',
+        'Link': 'https://www.homedepot.ca/en/home.html',
+        'results': []
+    }
+}
 
-gamestop  = {'searchbar':'q',
-           'name':'Gamestop',
-           'identifier':'GameStop |',
-           'imageselector':'div .searchProductImage > a > img',
-           'linkselector':'div .desktopSearchProductTitle a',
-           'titleselector':'div .desktopSearchProductTitle',
-           'priceselector':'div .searchTilePriceDesktop div',
-           'cardselect':'#productsList > div > div',
-           'results':[],
-           'Link':'https://www.gamestop.ca/',
-           'Captcha':'None'}
-
-bestbuy  = {'searchbar':'search',
-           'name':'Best Buy',
-           'identifier':'Best Buy:',
-           'imageselector':'div .searchProductImage > a > img',
-           'linkselector':'div .desktopSearchProductTitle a',
-           'titleselector':'div .desktopSearchProductTitle',
-           'priceselector':'div .searchTilePriceDesktop div',
-           'cardselect':'class*=style-module_col > class*=productItemName',
-           'results':[],
-           'Link':'https://www.bestbuy.ca/en-ca'}
-
-target = {'searchbar':'searchTerm',
-           'name':'Target',
-           'identifier':'Best Buy:',
-           'imageselector':'.sc-f82024d1-0.rLjwS h3 div a div.sc-d091612e-0.dqtsAv picture source:first-child',
-           'linkselector':'div.sc-f82024d1-0.rLjwS a',
-           'titleselector':'div.sc-f82024d1-0.rLjwS a',
-           'priceselector':'.sc-f82024d1-0.rLjwS div.sc-25636ef2-0.hjjUok span > span',
-           'cardselect':'.sc-f82024d1-0.rLjwS',
-           'results':[],
-           'Link':'https://www.target.com/'}
-
-ebay = {'searchbar':'_nkw',
-           'name':'Ebay',
-           'identifier':'Best Buy:',
-           'imageselector':'.s-item.s-item__pl-on-bottom > div > div.s-item__image-section > div > a > div > img',
-           'linkselector':'div > div.s-item__info.clearfix > a',
-           'titleselector':'.s-item.s-item__pl-on-bottom > div > div.s-item__info.clearfix > a > div > span',
-           'priceselector':'.s-item.s-item__pl-on-bottom > div > div.s-item__info.clearfix > div.s-item__details.clearfix > div.s-item__details-section--primary > div:nth-child(1) > span > span',#item52df3aeca1 > div > div.s-item__info.clearfix > div.s-item__details.clearfix > div.s-item__details-section--primary > div:nth-child(1) > span
-           'cardselect':'.s-item.s-item__pl-on-bottom',
-           'results':[],
-           'Link':'https://www.ebay.ca/'}
-
-homedepot = {'searchbar':'#id110',
-           'name':'Sams Club',
-           'identifier':'Best Buy:',
-           'imageselector':'.s-item.s-item__pl-on-bottom > div > div.s-item__image-section > div > a > div > img',
-           'linkselector':'div > div.s-item__info.clearfix > a',
-           'titleselector':'.s-item.s-item__pl-on-bottom > div > div.s-item__info.clearfix > a > div > span',
-           'priceselector':'.s-item.s-item__pl-on-bottom > div > div.s-item__info.clearfix > div.s-item__details.clearfix > div.s-item__details-section--primary > div:nth-child(1) > span > span',#item52df3aeca1 > div > div.s-item__info.clearfix > div.s-item__details.clearfix > div.s-item__details-section--primary > div:nth-child(1) > span
-           'cardselect':'.sc-pc-medium-desktop-card-canary.sc-plp-cards-card',
-           'results':[],
-           'Link':'https://www.homedepot.ca/en/home.html'}
-
-
-
-stores = [ebay,target]
 headers = {"apikey":"CpRFLFxf9zEqQQ8m8ET3nOtGojDSRMyj"}
 
 def passhashing(password):
